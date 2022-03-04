@@ -9,7 +9,8 @@
   "author": "Mir Sahib",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.3"
+    "express": "^4.17.3",
+    "mongodb": "^4.4.1"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",
