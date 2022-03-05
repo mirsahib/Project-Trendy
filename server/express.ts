@@ -8,9 +8,9 @@ const app = async (app:Express)=>{
     
 
     //app router
-    UserApi(app)
-    ProductApi(app)
-    OrderApi(app)
+    new UserApi(app)
+    new ProductApi(app)
+    new OrderApi(app)
 
 }
 

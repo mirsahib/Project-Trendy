@@ -4,7 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.ts"
+    "dev": "nodemon index.ts",
+    "getAllOrder":"curl http://localhost:3000/api/order",
+    "getOrder":"curl http://localhost:3000/api/order:1",
+    "createOrder":"curl -X POST http://localhost:3000/api/order",
+    "updateOrder":"curl -X PUT http://localhost:3000/api/order:1",
+    "deleteOrder":"curl -X DELETE http://localhost:3000/api/order:1"
   },
   "author": "Mir Sahib",
   "license": "ISC",
