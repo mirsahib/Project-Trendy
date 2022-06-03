@@ -5,21 +5,23 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon -L index.ts",
-    "getAllOrder":"curl http://localhost:3000/api/order",
-    "getOrder":"curl http://localhost:3000/api/order:1",
-    "createOrder":"curl -X POST http://localhost:3000/api/order",
-    "updateOrder":"curl -X PUT http://localhost:3000/api/order:1",
-    "deleteOrder":"curl -X DELETE http://localhost:3000/api/order:1"
+    "getAllOrder": "curl http://localhost:3000/api/order",
+    "getOrder": "curl http://localhost:3000/api/order:1",
+    "createOrder": "curl -X POST http://localhost:3000/api/order",
+    "updateOrder": "curl -X PUT http://localhost:3000/api/order:1",
+    "deleteOrder": "curl -X DELETE http://localhost:3000/api/order:1"
   },
   "author": "Mir Sahib",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.3",
-    "mongodb": "^4.4.1"
+    "mongodb": "^4.4.1",
+    "pg": "^8.7.3"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",
     "@types/node": "^17.0.21",
+    "@types/pg": "^8.6.5",
     "nodemon": "^2.0.15",
     "ts-node": "^10.6.0",
     "typescript": "^4.6.2"
