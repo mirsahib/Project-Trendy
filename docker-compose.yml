@@ -57,5 +57,7 @@ services:
   client:
     build: 
       context: ./client
+    volumes:
+      - ./client:/client
     ports:
     - "3000:3000"
