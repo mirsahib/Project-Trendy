@@ -1,24 +1,73 @@
-import { Request,Response } from "express"
+import {  Request, Response } from "express"
+import OrderRepository, { IOrder } from "../database/repository/order.repository"
 
-class OrderService{
 
-    constructor(){}
+class OrderService {
+    private OrderRepository: OrderRepository
 
-    create(req:Request,res:Response){
-        res.send('create order')
+    constructor() {
+        this.OrderRepository = new OrderRepository()
     }
-    readAll(req:Request,res:Response){
-        res.send('read all order')
+
+    create = async (req: Request, res: Response) => {
+        try {
+            const { firstName, lastName }: IOrder = req.body
+            const user = await this.OrderRepository.createOrder({ firstName, lastName })
+            res.json({ 'user': user })
+        } catch (error) {
+            console.log('Order saved failed', error)
+            res.json({ "message": error })
+        }
     }
-    readByID(req:Request,res:Response){
-        res.send('read order by id')
+    readAll = async (req: Request, res: Response) => {
+        try {
+            const users = await this.OrderRepository.read()
+            res.json({ 'Orders': users })
+        } catch (error) {
+            res.json({ "error": error })
+        }
     }
-    updateById(req:Request,res:Response){
-        res.send('update order by id')
+    readByID=async(req: Request, res: Response) =>{
+        try {
+            const id = req.params.id
+            const user = await this.OrderRepository.readById(id)
+            if(user!=null){
+                res.json({"user":user})
+            }else{
+                res.json({"message":"user not found"})
+            }
+        } catch (error) {
+            res.json({"error":error})
+        }
+
     }
-    deleteById(req:Request,res:Response){
-        res.send('delete order by id')
+    updateById=async(req: Request, res: Response) =>{
+        try {
+            const id = req.params.id
+            const updatedOrder = await this.OrderRepository.updateById(id,req.body)
+            if(updatedOrder!=null){
+                res.json({"message":"user updated"})
+            }else{
+                res.json({"message":"user not found"})
+            }
+        } catch (error) {
+            res.json({"error":error})
+        }
     }
+    deleteById=async (req: Request, res: Response) =>{
+        try {
+            const id = req.params.id
+            const deletedOrder = await this.OrderRepository.deleteById(id)
+            if(deletedOrder!=null){
+                res.json({"message":"user is deleted"})
+            }else{
+                res.json({"message":"user not found"})
+            }
+        } catch (error) {
+            res.json({"error":error})
+        }
+    }
+
 }
 
 export default OrderService
