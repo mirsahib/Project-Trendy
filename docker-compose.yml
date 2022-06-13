@@ -4,7 +4,8 @@ services:
   # When Docker Compose starts this container it will automatically
   # use the Dockerfile in the directory to configure it
   app:
-    build: .
+    build: 
+      context: ./server
     depends_on:
       # Our app does not work without our database
       # so this ensures our database is loaded first
@@ -14,7 +15,7 @@ services:
     volumes:
       # Maps our current project directory `.` to
       # our working directory in the container
-      - ./:/server
+      - ./server:/server
       # node_modules workaround for volumes
       # https://stackoverflow.com/a/32785014
     environment: &environment
@@ -54,6 +55,8 @@ services:
       - "16543:80"
     depends_on:
       - postgres
+
+
   client:
     build: 
       context: ./client
