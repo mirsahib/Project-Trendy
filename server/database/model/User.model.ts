@@ -3,7 +3,13 @@ import PostgresService from "../PostgresService";
 
 const sequelize = PostgresService.getInstance().getConnection()
 
-class User extends Model { }
+class User extends Model {
+    declare id:string
+    declare userName:string
+    declare firstName:string
+    declare lastName:string
+    declare password:string
+ }
 
 User.init({
     id: {
@@ -13,13 +19,19 @@ User.init({
         unique: true,
         primaryKey: true,
     },
+    userName:{
+        type:DataTypes.STRING,
+        allowNull:false
+    },
     firstName: {
         type: DataTypes.STRING,
-        allowNull: false
     },
     lastName: {
         type: DataTypes.STRING
         // allowNull defaults to true
+    },
+    password:{
+        type:DataTypes.STRING
     }
 }, {
     // Other model options go here

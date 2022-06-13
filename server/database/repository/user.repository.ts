@@ -2,14 +2,16 @@ import UserModel from "../model/User.model";
 
 
 export interface IUser {
+    email:string,
+    password:string
     firstName: string,
     lastName: string
 }
 
 class UserRepository {
     
-    createUser = async({firstName,lastName}:IUser)=> {
-        const user = await new UserModel({ firstName, lastName })
+    createUser = async({firstName,lastName,email,password}:IUser)=> {
+        const user = await new UserModel({ firstName, lastName ,email,password})
         await user.save()
         console.log('User saved successfully')
         return user
@@ -18,8 +20,12 @@ class UserRepository {
         const users = await UserModel.findAll()
         return users
     }
-    readById =async(id:string)=>{
+    findById =async(id:string)=>{
         const user = await UserModel.findByPk(id)
+        return user
+    }
+    findByEmail = async(email:string)=>{
+        const user = await UserModel.findOne({where:{email:email}})
         return user
     }
     updateById=async(id:string,updatedField:Object)=>{

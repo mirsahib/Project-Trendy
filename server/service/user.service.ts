@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express"
+import { Request, Response } from "express"
 import UserRepository, { IUser } from "../database/repository/user.repository"
 
 
@@ -11,8 +11,8 @@ class UserService {
 
     create = async (req: Request, res: Response) => {
         try {
-            const { firstName, lastName }: IUser = req.body
-            const user = await this.UserRepository.createUser({ firstName, lastName })
+            const { firstName, lastName,email,password }: IUser = req.body
+            const user = await this.UserRepository.createUser({ firstName, lastName ,email,password})
             res.json({ 'user': user })
         } catch (error) {
             console.log('User saved failed', error)
@@ -30,7 +30,7 @@ class UserService {
     readByID=async(req: Request, res: Response) =>{
         try {
             const id = req.params.id
-            const user = await this.UserRepository.readById(id)
+            const user = await this.UserRepository.findById(id)
             if(user!=null){
                 res.json({"user":user})
             }else{

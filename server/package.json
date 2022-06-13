@@ -10,13 +10,14 @@
     "createOrder": "curl -X POST http://localhost:3000/api/order",
     "updateOrder": "curl -X PUT http://localhost:3000/api/order:1",
     "deleteOrder": "curl -X DELETE http://localhost:3000/api/order:1",
-    "getUser":"curl http://localhost:8080/api/user/:1"
-
+    "getUser": "curl http://localhost:8080/api/user/:1"
   },
   "author": "Mir Sahib",
   "license": "ISC",
   "dependencies": {
+    "@types/jsonwebtoken": "^8.5.8",
     "express": "^4.17.3",
+    "jsonwebtoken": "^8.5.1",
     "mongodb": "^4.4.1",
     "pg": "^8.7.3",
     "pg-hstore": "^2.3.4",
