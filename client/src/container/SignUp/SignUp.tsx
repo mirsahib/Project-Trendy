@@ -1,14 +1,47 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import { Container, Card, Form, Button, Grid } from "semantic-ui-react";
 import "./SignUp.css";
+import {signUp} from '../../store/auth-store/auth-action'
+import { useAppDispatch } from "../../store";
+
 
 function SignUp() {
   //router
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [firstName, setFname] = useState<string>("");
+  const [lastName, setLname] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate()
+  
 
-  const loginUser = () => {
+  const handleSignup = async(event:React.FormEvent) => {
+    event.preventDefault()
+    if(!firstName){
+      console.log('First name missing')
+      return
+    }
+    if(!lastName){
+      console.log('Last name missing')
+      return
+    }
+    if(!email){
+      console.log('email missing')
+    }
+    if(!password){
+      console.log('password name missing')
+    }
+    
+    dispatch(signUp({firstName,lastName,email,password}))
+    clearState()
+    navigate('/')
+  }
+  const clearState=()=>{
+    setFname("")
+    setLname("")
+    setEmail("")
+    setPassword("")
   }
 
   return (
@@ -24,7 +57,8 @@ function SignUp() {
                   <input
                     placeholder="First Name"
                     type="text"
-                    onChange={(event) => setEmail(event.target.value)}
+                    value={firstName}
+                    onChange={(event) => setFname(event.target.value)}
                   />
                 </Form.Field>
                 <Form.Field required>
@@ -32,7 +66,8 @@ function SignUp() {
                   <input
                     placeholder="Last Name"
                     type="text"
-                    onChange={(event) => setEmail(event.target.value)}
+                    value={lastName}
+                    onChange={(event) => setLname(event.target.value)}
                   />
                 </Form.Field>
                 <Form.Field required>
@@ -40,6 +75,7 @@ function SignUp() {
                   <input
                     placeholder="email"
                     type="email"
+                    value={email}
                     onChange={(event) => setEmail(event.target.value)}
                   />
                 </Form.Field>
@@ -48,10 +84,11 @@ function SignUp() {
                   <input
                     placeholder="password"
                     type="password"
+                    value={password}
                     onChange={(event) => setPassword(event.target.value)}
                   />
                 </Form.Field>
-                <Button color="green" type="submit" onClick={loginUser}>
+                <Button color="green" type="submit" onClick={handleSignup}>
                   Sign Up
                 </Button>
     

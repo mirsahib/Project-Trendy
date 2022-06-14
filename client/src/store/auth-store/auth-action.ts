@@ -1,31 +1,40 @@
 import { authAction } from "./auth-store"
 import { AppDispatch } from ".."
-export const signUp=({fname,lname,email,password}:{fname:string,lname:string,email:string,password:string})=>{
-    return async(dispatch:AppDispatch)=>{
-        const sendRequest = async()=>{
-            const res = await fetch('',{
-                method:'POST',
-                body:JSON.stringify({fname,lname,email,password})
+type IData={
+    id:string
+    token:string
+}
+export const signUp = ({ firstName, lastName, email, password }: { firstName: string, lastName: string, email: string, password: string }) => {
+    return async (dispatch: AppDispatch) => {
+        const sendRequest = async () => {
+            const res = await fetch('http://localhost:8080/api/user', {
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                method: 'POST',
+                body: JSON.stringify({ firstName, lastName, email, password })
             })
-            dispatch(authAction.logIn())
-            
+            const data:IData = await res.json()
+            localStorage.setItem('user',JSON.stringify({id:data.id,token:data.token}))
+            dispatch(authAction.logIn({firstName,lastName}))
         }
         try {
+            console.log('iam here')
             await sendRequest()
         } catch (error) {
-            console.log('Sign up failed')
+            console.log('Sign up failed', error)
         }
     }
 }
-export const login=({email,password}:{email:string,password:string})=>{
-    return async(dispatch:AppDispatch)=>{
-        const sendRequest = async()=>{
-            const res = await fetch('',{
-                method:'POST',
-                body:JSON.stringify({email,password})
+export const login = ({ email, password }: { email: string, password: string }) => {
+    return async (dispatch: AppDispatch) => {
+        const sendRequest = async () => {
+            const res = await fetch('', {
+                method: 'POST',
+                body: JSON.stringify({ email, password })
             })
-            dispatch(authAction.logIn())
-            
+            //dispatch(authAction.logIn())
+
         }
         try {
             await sendRequest()
