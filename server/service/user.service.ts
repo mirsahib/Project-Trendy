@@ -1,5 +1,6 @@
 import { Request, Response } from "express"
 import UserRepository, { IUser } from "../database/repository/user.repository"
+import generateToken from "../util/utils"
 
 
 class UserService {
@@ -13,10 +14,14 @@ class UserService {
         try {
             const { firstName, lastName,email,password }: IUser = req.body
             const user = await this.UserRepository.createUser({ firstName, lastName ,email,password})
-            res.json({ 'user': user })
+            const token = await generateToken(user.id)
+            res.json({ id: user.id,token:token })
         } catch (error) {
-            console.log('User saved failed', error)
-            res.json({ "message": error })
+            let message = 'Unknow error'
+            if(error instanceof Error){
+                message= error.message
+            }
+            res.json({ error: message })
         }
     }
     readAll = async (req: Request, res: Response) => {
