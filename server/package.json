@@ -15,7 +15,9 @@
   "author": "Mir Sahib",
   "license": "ISC",
   "dependencies": {
+    "@types/cors": "^2.8.12",
     "@types/jsonwebtoken": "^8.5.8",
+    "cors": "^2.8.5",
     "express": "^4.17.3",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^4.4.1",
