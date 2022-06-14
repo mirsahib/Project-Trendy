@@ -13,7 +13,6 @@ class UserRepository {
     createUser = async({firstName,lastName,email,password}:IUser)=> {
         const user = await new UserModel({ firstName, lastName ,email,password})
         await user.save()
-        console.log('User saved successfully')
         return user
     }
     read =async () => {

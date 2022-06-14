@@ -5,10 +5,10 @@ const sequelize = PostgresService.getInstance().getConnection()
 
 class User extends Model {
     declare id:string
-    declare userName:string
     declare firstName:string
     declare lastName:string
     declare password:string
+    declare email:string
  }
 
 User.init({
@@ -19,8 +19,9 @@ User.init({
         unique: true,
         primaryKey: true,
     },
-    userName:{
+    email:{
         type:DataTypes.STRING,
+        unique:true,
         allowNull:false
     },
     firstName: {
