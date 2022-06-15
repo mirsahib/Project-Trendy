@@ -11,7 +11,7 @@ class AuthService {
 
     signIn = async (req: Request, res: Response) => {
         const { email, password } = req.body
-
+        
         try {
             const user = await  this.UserRepository.findByEmail(email)
             if (!user) {
@@ -23,7 +23,7 @@ class AuthService {
             const token = await generateToken(user.id)
             
             return res.status(200).json(
-                {user:user.id,token:token}
+                {id:user.id,token:token,firstName:user.firstName,lastName:user.lastName}
             ) 
         } catch (error) {
             return res.status(401).json({

@@ -11,7 +11,7 @@ class AuthApi{
         this.AuthService = new AuthService()
         
         //register routes
-        this.app.post('/api/auth/user',this.AuthService.signIn)
+        this.app.post('/api/auth',this.AuthService.signIn)
         
     }
 
