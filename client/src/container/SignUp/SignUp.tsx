@@ -33,9 +33,8 @@ function SignUp() {
       console.log('password name missing')
     }
     
-    dispatch(signUp({firstName,lastName,email,password}))
+    dispatch(signUp({firstName,lastName,email,password},navigate))
     clearState()
-    navigate('/')
   }
   const clearState=()=>{
     setFname("")

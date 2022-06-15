@@ -1,14 +1,32 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link ,useNavigate} from "react-router-dom";
 import { Container, Card, Form, Button, Grid } from "semantic-ui-react";
 import "./Login.css";
+import {login} from '../../store/auth-store/auth-action'
+import { useAppDispatch } from "../../store/hooks";
+
 
 function Login() {
   //router
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate()
+  const dispatch = useAppDispatch()
 
-  const loginUser = () => {
+  const loginUser = (event:React.FormEvent) => {
+    event.preventDefault()
+    if(!email){
+      console.log('email missing')
+    }
+    if(!password){
+      console.log('password name missing')
+    }
+    dispatch(login({email,password},navigate))
+    clearState()
+  }
+  const clearState=()=>{
+    setEmail("")
+    setPassword("")
   }
 
   return (
@@ -24,6 +42,7 @@ function Login() {
                   <input
                     placeholder="email"
                     type="email"
+                    value={email}
                     onChange={(event) => setEmail(event.target.value)}
                   />
                 </Form.Field>
@@ -32,6 +51,7 @@ function Login() {
                   <input
                     placeholder="password"
                     type="password"
+                    value={password}
                     onChange={(event) => setPassword(event.target.value)}
                   />
                 </Form.Field>

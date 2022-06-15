@@ -4,13 +4,20 @@ import { Menu, Icon } from "semantic-ui-react";
 import "./Header.css";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../../store/hooks";
-
+import { useAppDispatch } from "../../store";
+import {authAction} from '../../store/auth-store/auth-store'
 
 function Header() {
   const basket = {length}
   const user = null
-  const login=()=>{}
   const auth = useAppSelector(state=>state.auth)
+  const dispatch = useAppDispatch()
+  const logOut=()=>{
+    if(auth && auth.isLoggedIn===true){
+      console.log('signout')
+      dispatch(authAction.logOut())
+    }
+  }
 
   return (
     <div className="header">
@@ -41,7 +48,7 @@ function Header() {
           <Link to="/signup">
             <Menu.Item>
               {auth && auth.isLoggedIn===true ? (
-                <div onClick={login}>
+                <div onClick={logOut} >
                   <Icon name="sign-out" />
                   {auth.firstName} {auth.lastName}
                 </div>
