@@ -3,7 +3,13 @@ import PostgresService from "../PostgresService";
 
 const sequelize = PostgresService.getInstance().getConnection()
 
-class Product extends Model { }
+class Product extends Model {
+    declare id:string
+    declare title:string
+    declare price:number
+    declare rating:number
+    declare image:string
+ }
 
 Product.init({
     id: {
@@ -13,13 +19,19 @@ Product.init({
         unique: true,
         primaryKey: true,
     },
-    firstName: {
-        type: DataTypes.STRING,
-        allowNull: false
+    title:{
+        type:DataTypes.STRING,
+        allowNull:false
     },
-    lastName: {
-        type: DataTypes.STRING
+    price: {
+        type: DataTypes.DOUBLE,
+    },
+    rating: {
+        type: DataTypes.DOUBLE
         // allowNull defaults to true
+    },
+    image:{
+        type:DataTypes.STRING
     }
 }, {
     // Other model options go here

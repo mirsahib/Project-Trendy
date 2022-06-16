@@ -1,34 +1,28 @@
 import ProductModel from "../model/Product.model";
 
 
-export interface IProduct {
-    firstName: string,
-    lastName: string
-}
-
 class ProductRepository {
     
-    createProduct = async({firstName,lastName}:IProduct)=> {
-        const user = await new ProductModel({ firstName, lastName })
-        await user.save()
-        console.log('Product saved successfully')
-        return user
+    createProduct = async({title,price,rating,image}:ProductModel)=> {
+        const product = await new ProductModel({ title, price,rating ,image})
+        await product.save()
+        return product
     }
     read =async () => {
-        const users = await ProductModel.findAll()
-        return users
+        const products = await ProductModel.findAll()
+        return products
     }
     readById =async(id:string)=>{
-        const user = await ProductModel.findByPk(id)
-        return user
+        const product = await ProductModel.findByPk(id)
+        return product
     }
     updateById=async(id:string,updatedField:Object)=>{
-        const user = await ProductModel.update(updatedField,{where:{id:id}})
-        return user
+        const product = await ProductModel.update(updatedField,{where:{id:id}})
+        return product
     }
     deleteById=async(id:string)=>{
-        const user = await ProductModel.destroy({where:{id:id}})
-        return user
+        const product = await ProductModel.destroy({where:{id:id}})
+        return product
     }
 }
 
