@@ -14,6 +14,7 @@ import Home from "./container/Home/Home";
 import Login from "./container/Login/Login";
 import SignUp from './container/SignUp/SignUp'
 import Footer from "./container/Footer/Footer";
+import UploadImage from "./container/UploadImage/UploadImage";
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/signup" element={<SignUp/>}></Route>
           <Route path="/login" element={<Login/>}></Route>
+          <Route path="/uploadImage" element={<UploadImage/>}></Route>
         </Routes>
         <Footer></Footer>
       </BrowserRouter>
