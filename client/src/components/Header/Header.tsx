@@ -1,24 +1,33 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Menu, Icon } from "semantic-ui-react";
 
 import "./Header.css";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../../store/hooks";
 import { useAppDispatch } from "../../store";
-import {authAction} from '../../store/auth-store/auth-store'
+import { authAction } from '../../store/auth-store/auth-store'
+import {IData} from "../../store/auth-store/auth-action"
 
 function Header() {
-  const basket = {length}
   const user = null
-  const auth = useAppSelector(state=>state.auth)
-  const product = useAppSelector(state=>state.product)
+  const product = useAppSelector(state => state.product)
+  const [auth,setAuth] = useState<IData>()
   const dispatch = useAppDispatch()
-  const logOut=()=>{
-    if(auth && auth.isLoggedIn===true){
-      console.log('signout')
-      dispatch(authAction.logOut())
-    }
+  const logOut = () => {
+    dispatch(authAction.logOut())
   }
+  const getAuth= useCallback(()=>{
+      const data = localStorage.getItem('user')
+      if(data) {
+        const user = JSON.parse(data) as IData
+         setAuth(user)
+      }
+  },[])
+
+  useEffect(() => {
+    console.log('User created')
+    getAuth()
+  },[getAuth])
 
   return (
     <div className="header">
@@ -48,7 +57,7 @@ function Header() {
           </Link>
           <Link to="/signup">
             <Menu.Item>
-              {auth && auth.isLoggedIn===true ? (
+              {auth ? (
                 <div onClick={logOut} >
                   <Icon name="sign-out" />
                   {auth.firstName} {auth.lastName}

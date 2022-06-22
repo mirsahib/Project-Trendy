@@ -17,9 +17,11 @@ function Login() {
     event.preventDefault()
     if(!email){
       console.log('email missing')
+      return;
     }
     if(!password){
       console.log('password name missing')
+      return;
     }
     dispatch(login({email,password},navigate))
     clearState()

@@ -26,9 +26,11 @@ class AuthService {
                 {id:user.id,token:token,firstName:user.firstName,lastName:user.lastName}
             ) 
         } catch (error) {
-            return res.status(401).json({
-                error: "Could not sign in"
-            })
+            let message = 'Unknow error'
+            if(error instanceof Error){
+                message= error.message
+            }
+            res.status(500).json({ error: message })
         }
     }
 
