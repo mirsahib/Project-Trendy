@@ -1,12 +1,13 @@
 import React from "react";
 import { Segment, Item, Label } from "semantic-ui-react";
-import { useStateValue } from "../../StateProvider/StateProvider";
-import { getBasketTotal } from "../../Reducer/Reducer";
+import { useAppSelector } from "../../store/hooks";
+
 
 import './SubTotal.css'
 
 function SubTotal() {
-    const[{basket},] = useStateValue();
+  const product = useAppSelector(state=>state.product)
+  
   return (
     <div>
       <Item>
@@ -15,7 +16,7 @@ function SubTotal() {
             <Label color="orange" ribbon>
               Total Price
             </Label>
-            <span className="subtotal__price">${getBasketTotal(basket)}</span>
+            <span className="subtotal__price">{product.total}</span>
           </Segment>
         </Item.Content>
       </Item>

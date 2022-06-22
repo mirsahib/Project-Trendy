@@ -1,9 +1,11 @@
 import React from "react";
 import { Card, Image, Rating, Button } from "semantic-ui-react";
+import { useAppDispatch } from "../../store/hooks";
+import { productAction } from "../../store/product-store/product-store";
 import "./Product.css";
 
 interface IProduct{
-  id:number,
+  id:string,
   title:string,
   price:number,
   rating:number,
@@ -11,7 +13,12 @@ interface IProduct{
 }
 
 function Product({ id, title, price, rating, imageUrl }:IProduct) {
-  const addTobasket=()=>{}
+  const dispatch = useAppDispatch()
+
+  const addTobasket=()=>{
+    const product = {id,title,price,rate:rating,image:imageUrl}
+    dispatch(productAction.addToCart(product))
+  }
   return (
     <div className="product">
       <Card className="product__card">

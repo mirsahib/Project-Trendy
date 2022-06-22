@@ -11,6 +11,7 @@ function Header() {
   const basket = {length}
   const user = null
   const auth = useAppSelector(state=>state.auth)
+  const product = useAppSelector(state=>state.product)
   const dispatch = useAppDispatch()
   const logOut=()=>{
     if(auth && auth.isLoggedIn===true){
@@ -42,7 +43,7 @@ function Header() {
           </Link>
           <Link to="/checkout">
             <Menu.Item>
-              <Icon name="shop" /> {basket?.length}
+              <Icon name="shop" /> {product.totalQuantity}
             </Menu.Item>
           </Link>
           <Link to="/signup">

@@ -15,6 +15,7 @@ import Login from "./container/Login/Login";
 import SignUp from './container/SignUp/SignUp'
 import Footer from "./container/Footer/Footer";
 import UploadImage from "./container/UploadImage/UploadImage";
+import Checkout from "./container/Checkout/Checkout";
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
           <Route path="/signup" element={<SignUp/>}></Route>
           <Route path="/login" element={<Login/>}></Route>
           <Route path="/uploadImage" element={<UploadImage/>}></Route>
+          <Route path="/checkout" element={<Checkout/>}></Route>
         </Routes>
         <Footer></Footer>
       </BrowserRouter>

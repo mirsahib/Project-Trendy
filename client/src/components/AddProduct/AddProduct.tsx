@@ -17,66 +17,48 @@ import { useAppSelector } from "../../store/hooks";
 
 function AddProduct() {
 
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState<null | File>(null);
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
   const [rating, setRating] = useState("");
   const [progress, setProgress] = useState(0);
-  const auth = useAppSelector(state=>state.auth)
+  const auth = useAppSelector(state => state.auth)
 
 
-  const handleChange = (event:React.ChangeEvent) => {
-    // if (event.target.files[0]) {
-    //   setImage(event.target.files[0]);
-    // }
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files) {
+      setImage(event.target.files[0]);
+    }
   };
 
-  const handleUpload = () => {
-    // const uploadTask = storage.ref(`images/${image.name}`).put(image);
+  const handleUpload = async () => {
+    
+    if (!title) { console.log('title missing'); return }
+    if (!price) { console.log('price missing'); return }
+    if (!rating) { console.log('rating missing'); return }
+    const formData = new FormData()
+    formData.append('title', title)
+    formData.append('price', price)
+    formData.append('rating', rating)
+    if (image) {
+      formData.append('image', image)
+    }
+    console.log(formData.getAll('image'))
 
-    // uploadTask.on(
-    //   "state_changed",
-    //   (snapshot) => {
-    //     //progress function
-    //     const progress = Math.round(
-    //       (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-    //     ); //proogress details
-    //     setProgress(progress);
-    //   },
-    //   (error) => {
-    //     console.error(error);
-    //     alert(error.message);
-    //   },
-    //   //final upload
-    //   () => {
-    //     storage
-    //       .ref("images")
-    //       .child(image.name)
-    //       .getDownloadURL()
-    //       .then((url) => {
-    //         //post image inside data
-    //         db.collection("Products").add({
-    //           title,
-    //           price,
-    //           rating,
-    //           imageUrl: url,
-    //         });
-    //         setProgress(0);
-    //         setTitle("");
-    //         setPrice();
-    //         setRating();
-    //         setImage(null);
-    //         history.push("/");
-    //       });
-    //   }
-    // );
+    const res = await fetch('http://localhost:8080/api/product', {
+      method: 'POST',
+      body: formData
+    })
+
+    const data = await res.json()
+    console.log(data)
   };
 
   return (
     <div className="addProduct">
       <Container>
         <Grid centered columns={3} doubling stackable>
-          {auth && auth.isLoggedIn===true ? (
+          {auth && auth.isLoggedIn === true ? (
             <Grid.Column>
               <h2>Add Product</h2>
               <Card>
@@ -86,6 +68,7 @@ function AddProduct() {
                     <input
                       placeholder="product title"
                       type="text"
+                      value={title}
                       onChange={(event) => setTitle(event.target.value)}
                     />
                   </Form.Field>
@@ -107,7 +90,7 @@ function AddProduct() {
                   </Form.Field>
                   <Form.Field required>
                     <input
-                      placeholder="Last Name"
+                      placeholder="image"
                       type="file"
                       onChange={handleChange}
                     />

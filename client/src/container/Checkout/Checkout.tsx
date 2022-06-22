@@ -1,12 +1,13 @@
 import React from "react";
-import { useStateValue } from "../../StateProvider/StateProvider";
-import CheckoutProduct from "../../components/CheckoutProduct/CheckoutProduct";
 import { Container, Item, Card, Grid, Message } from "semantic-ui-react";
+import { useAppSelector } from "../../store/hooks";
 import "./Checkout.css";
+import CheckoutProduct from "../../components/CheckoutProduct/CheckoutProduct";
 import SubTotal from "../../components/SubTotal/SubTotal";
 
 function Checkout() {
-  const [{ basket }] = useStateValue();
+  const product = useAppSelector(state=>state.product)
+  
   return (
     <div className="checkout">
       <Container>
@@ -14,7 +15,7 @@ function Checkout() {
           <Grid.Row>
             <Grid.Column width={8}>
               <div>
-                {basket?.length === 0 ? (
+                {product.totalQuantity === 0 ? (
                   <div className="checkout__warningMessage">
                     <Message warning>
                       <Message.Header>
@@ -28,22 +29,23 @@ function Checkout() {
                   </div>
                 ) : (
                   <div>
-                    {basket?.length >= 2 ? (
+                    {product.totalQuantity >= 2 ? (
                       <h2>Your shopping basket items </h2>
                     ) : (
                       <h2>Your shopping basket item </h2>
                     )}
                     <Card fluid className="checkout__card">
                       <Item.Group>
-                        {basket?.map((item) => {
+                        {product.itemList.map((item,index) => {
                           return (
                             <CheckoutProduct
-                              key={item.id}
+                              key={index}
                               id={item.id}
                               title={item.title}
-                              imageUrl={item.imageUrl}
+                              image={item.image}
                               price={item.price}
-                              rating={item.rating}
+                              rate={item.rate}
+                              quantity={item.quantity}
                             ></CheckoutProduct>
                           );
                         })}
@@ -53,7 +55,7 @@ function Checkout() {
                 )}
               </div>
             </Grid.Column>
-            {basket?.length > 0 && (
+            {product.totalQuantity > 0 && (
               <div className="checkout__right">
                 <Grid.Column width={6}>
                   <Card>

@@ -1,16 +1,16 @@
 import React from "react";
 import { Item, Rating, Button, Divider } from "semantic-ui-react";
+import { useAppDispatch } from "../../store/hooks";
 import "./CheckoutProduct.css";
+import {productAction,ProductState} from '../../store/product-store/product-store'
 
-import { useStateValue } from "../../StateProvider/StateProvider";
 
-function CheckoutProduct({ id, title, price, rating, imageUrl }) {
-  const [, dispatch] = useStateValue();
+function CheckoutProduct(item:ProductState) {
+  const dispatch = useAppDispatch()
+
+
   const removeFromBasket = () => {
-    dispatch({
-      type:'REMOVE_FROM_BASKET',
-      id
-    })
+    dispatch(productAction.removeFromCart(item))
   };
 
   return (
@@ -18,17 +18,17 @@ function CheckoutProduct({ id, title, price, rating, imageUrl }) {
       <Item className="checkoutProduct__item">
         <Item.Image
           size="tiny"
-          src={imageUrl}
+          src={item.image}
           className="checkoutProduct__image"
         />
         <Item.Content>
-          <Item.Header className="checkoutProduct__title">{title}</Item.Header>
+          <Item.Header className="checkoutProduct__title">{item.title}</Item.Header>
           <Item.Meta>
             {" "}
-            <Rating icon="star" defaultRating={rating} maxRating={5} />
+            <Rating icon="star" defaultRating={item.rate} maxRating={5} />
           </Item.Meta>
           <Item.Description>
-            <span className="checkoutProduct__price">${price}</span>
+            <span className="checkoutProduct__price">${item.price} X {item.quantity}</span>
           </Item.Description>
           <Item.Extra>
             <Button

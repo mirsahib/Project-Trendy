@@ -14,9 +14,11 @@ class ProductService {
     create = async (req: Request, res: Response) => {
         try {
             const item: ProductModel = req.body
+            
             if(req.file?.path){
                 item.image = req.file.path
             }
+            console.log(req.body.image)
             const product  = await this.ProductRepository.createProduct(item)
             res.json({ message: 'saved successfully',product:product})
         } catch (error) {
@@ -26,7 +28,7 @@ class ProductService {
     readAll = async (req: Request, res: Response) => {
         try {
             const products = await this.ProductRepository.read()
-            res.json({ 'Products': products })
+            res.json({ products })
         } catch (error) {
             errorMessage(error,res)
         }
